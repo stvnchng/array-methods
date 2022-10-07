@@ -54,3 +54,62 @@ console.log(map(test, (x) => x ** 2));
 console.log(reduce(test, (a, b) => a * b, 1));
 console.log(filter(test, (x) => x % 2 == 0));
 console.log(sort([6, 34, 5, 6, 3, 1], null));
+
+const every = (items, callback) => {
+  for (const item of items) {
+    if (!callback(item)) return false;
+  }
+  return true;
+};
+
+const flat = (items) => {
+  let res = [];
+  items.forEach((item) =>
+    Array.isArray(item) ? res.push(...flat(item)) : res.push(item)
+  );
+  return res;
+};
+
+const flatN = (items, n = Infinity) => {
+  let res = [];
+  items.forEach((item) =>
+    Array.isArray(item) && n > 0
+      ? res.push(...flatN(item, n - 1))
+      : res.push(item)
+  );
+  return res;
+};
+
+// is it possible to chain non-native implementation
+const flatMap = (items, callback) => {
+  return flatN(items, 1).map((item) => callback(item));
+};
+
+console.log(every(test, (x) => x > 0));
+const nestedArr = [1, [2, 3], [[[], 6], 6], 8];
+console.log("\nFlatten array recursively");
+console.log(flat(nestedArr));
+console.log("\nFlatten array recursively with depth limit");
+console.log(flatN(nestedArr, 1));
+const arr1 = [1, 2, [3], [4, 5], 6, []];
+console.log(flatMap(arr1, (n) => n));
+
+const join = (items, separator = "") => {
+  let res = "";
+  for (let i = 0; i < items.length; i++) {
+    res += i > 0 ? separator + items[i] : items[i];
+  }
+  return res;
+};
+
+const reverse = (items) => {
+  let res = [];
+  for (let i = items.length - 1; i > -1; i--) {
+    res.push(items[i]);
+  }
+  return res;
+};
+
+const elements = ["Fire", "Air", "Water", "Earth", "Weed"];
+console.log(join(elements, "$"));
+console.log(reverse(elements));
