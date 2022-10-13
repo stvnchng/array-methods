@@ -6,12 +6,17 @@ const map = (items, callback) => {
   return res;
 };
 
-const reduce = (items, callback, initVal = 0) => {
+const reduceVerbose = (items, callback, initVal = 0) => {
   let acc = initVal;
   for (const item of items) {
     acc = callback(acc, item);
   }
   return acc;
+};
+
+const reduce = (items, callback, initVal = 0) => {
+  items.forEach((item) => (initVal = callback(initVal, item)));
+  return initVal;
 };
 
 const filter = (items, callback) => {
