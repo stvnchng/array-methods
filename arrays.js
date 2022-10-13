@@ -80,19 +80,32 @@ const flatN = (items, n = Infinity) => {
   return res;
 };
 
-// is it possible to chain non-native implementation
-const flatMap = (items, callback) => {
-  return flatN(items, 1).map((item) => callback(item));
-};
-
 console.log(every(test, (x) => x > 0));
 const nestedArr = [1, [2, 3], [[[], 6], 6], 8];
 console.log("\nFlatten array recursively");
 console.log(flat(nestedArr));
 console.log("\nFlatten array recursively with depth limit");
 console.log(flatN(nestedArr, 1));
-const arr1 = [1, 2, [3], [4, 5], 6, []];
-console.log(flatMap(arr1, (n) => n));
+
+// TODO: investigate is it possible to chain non-native implementation
+const flatMap = (items, callback) => {
+  return [].concat(...items.map((item) => callback(item)));
+};
+
+const flatMapVerbose = (items, callback) => {
+  let res = [];
+  items.forEach((item) => {
+    res.push(...callback(item));
+  });
+  return res;
+};
+
+const obj1 = { value: [1, 2, 3] };
+const obj2 = { value: [4, 5, 6] };
+const obj3 = { value: [7, 8, 9] };
+const arr = [obj1, obj2, obj3];
+console.log(flatMap(arr, ({ value }) => value));
+console.log(flatMapVerbose(arr, ({ value }) => value));
 
 const join = (items, separator = "") => {
   let res = "";
