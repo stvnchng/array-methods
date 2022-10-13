@@ -17,6 +17,18 @@ async function promiseAll(promises) {
   });
 }
 
+function promiseAllRecursive(promises) {
+  if (promises.length === 0) {
+    return Promise.resolve([]);
+  }
+  const [first, ...remaining] = promises;
+  return first.then((result) => {
+    return promiseAllRecursive(remaining).then((remainingResults) => {
+      return [result, ...remainingResults];
+    });
+  });
+}
+
 const mockReturnValue = (obj) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -32,3 +44,4 @@ const mock3 = mockReturnValue({ value: [7, 8, 9] });
 const promises = [mock1, mock2, mock3];
 
 promiseAll(promises).then((data) => console.log(data));
+promiseAllRecursive(promises).then((data) => console.log(data));
