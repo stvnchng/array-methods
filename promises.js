@@ -29,6 +29,25 @@ function promiseAllRecursive(promises) {
   });
 }
 
+const reduce = (items, callback, initVal) => {
+  items.forEach((item) => (initVal = callback(initVal, item)));
+  return initVal;
+};
+
+function promiseAllReducer(promises) {
+  return reduce(
+    promises,
+    (acc, value) => {
+      return Promise.resolve(acc).then((results) => {
+        return Promise.resolve(value).then((result) => {
+          return [...results, result];
+        });
+      });
+    },
+    []
+  );
+}
+
 const mockReturnValue = (obj) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
@@ -39,9 +58,12 @@ const mockReturnValue = (obj) => {
 
 const mock1 = mockReturnValue({ value: [1, 2, 3] });
 const mock2 = mockReturnValue({ value: [4, 5, 6] });
-const mock3 = mockReturnValue({ value: [7, 8, 9] });
+const mock3 = mockReturnValue({ value: [7, 8] });
 
 const promises = [mock1, mock2, mock3];
 
 promiseAll(promises).then((data) => console.log(data));
 promiseAllRecursive(promises).then((data) => console.log(data));
+promiseAllReducer(promises)
+  .then((data) => flatMapReduce(data, ({ value }) => value))
+  .then((numbers) => console.log(reduce(numbers, (x, y) => x + y, 0)));
