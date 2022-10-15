@@ -105,12 +105,17 @@ const flatMapVerbose = (items, callback) => {
   return res;
 };
 
+const flatMapReduce = (items, callback) => {
+  return reduce(items, (acc, next) => [...acc, ...callback(next)], []);
+};
+
 const obj1 = { value: [1, 2, 3] };
 const obj2 = { value: [4, 5, 6] };
 const obj3 = { value: [7, 8, 9] };
 const arr = [obj1, obj2, obj3];
 console.log(flatMap(arr, ({ value }) => value));
 console.log(flatMapVerbose(arr, ({ value }) => value));
+console.log(flatMapReduce(arr, ({ value }) => value));
 
 const join = (items, separator = "") => {
   let res = "";

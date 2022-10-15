@@ -74,7 +74,7 @@ const isEqualDeep = (o1, o2) => {
     return Object.keys(o1).every((key) => isEqualDeep(o1[key], o2[key]));
   }
 
-  // should not reach here
+  // If none of the conditions are satisfied the objects are not equal
   return false;
 };
 
