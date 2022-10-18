@@ -153,3 +153,19 @@ console.log(
     },
   })
 );
+
+const chunk = (items, size) => {
+  let res = [];
+  let curr = [];
+  for (const i of items) {
+    curr.push(i);
+    if (curr.length === size) {
+      res.push(curr);
+      curr = [];
+    }
+  }
+  if (curr) res.push(curr);
+  return res;
+};
+
+console.log(chunk([1, 2, 3, 4, 5], 0));
