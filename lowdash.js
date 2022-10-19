@@ -169,3 +169,34 @@ const chunk = (items, size) => {
 };
 
 console.log(chunk([1, 2, 3, 4, 5], 0));
+
+const stringify = (obj) => {
+  let res = Array.isArray(obj) ? "[" : "{";
+  for (let i = 0; i < Object.keys(obj).length; i++) {
+    const key = Object.keys(obj)[i];
+    let value = obj[key];
+    if (i > 0) {
+      res += ",";
+    }
+    if (!Array.isArray(obj)) {
+      res += `"${key}":`;
+    }
+    res += value instanceof Object ? stringify(value) : value;
+  }
+  return res + (Array.isArray(obj) ? "]" : "}");
+};
+
+const obj = {
+  3: { 5: { a: { b: [1, 2, 3] } }, c: [1, [2, [3]]], d: 5, e: 6 },
+};
+const arr = [1, 2, [3, 4, [5, 6]]];
+
+// verify that we get the same output as JSON.stringify
+console.log(stringify(obj), JSON.stringify(obj));
+
+// verify that the result of parsing the stringified object yields the same object
+console.log(isEqualDeep(JSON.parse(stringify(obj)), obj));
+
+// test same things on just a nested array
+console.log(stringify(arr), JSON.stringify(arr));
+console.log(isEqualDeep(JSON.parse(stringify(arr)), arr));
