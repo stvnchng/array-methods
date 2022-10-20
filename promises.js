@@ -62,8 +62,11 @@ const mock3 = mockReturnValue({ value: [7, 8] });
 
 const promises = [mock1, mock2, mock3];
 
-promiseAll(promises).then((data) => console.log(data));
-promiseAllRecursive(promises).then((data) => console.log(data));
-promiseAllReducer(promises)
-  .then((data) => flatMapReduce(data, ({ value }) => value))
-  .then((numbers) => console.log(reduce(numbers, (x, y) => x + y, 0)));
+const getResults = async () => {
+  try {
+    const results = await promiseAll(promises);
+    console.log(results);
+  } catch (error) {}
+};
+
+getResults();
