@@ -145,11 +145,10 @@ function camelize(str) {
 
 console.log(
   humpify({
-    "EquipmentClass name": "EquipmentClass name",
     "EquipmentClass name search wahhhhht": 66,
     "EquipmentClass name kitchen dumb waht": {
       FakeNameBurger1: 6,
-      "hi my name is john": 7,
+      "hi my name is john": { "a b c": 5 },
     },
   })
 );
