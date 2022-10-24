@@ -90,15 +90,6 @@ console.log(
 );
 // console.log(isEqualDeep(new Date(1010), new Date(100))); // Example for Date just cause
 
-// TODO: not actually sure if these are correct
-const debounce = (callback, timeout) => {
-  return setTimeout(callback, timeout);
-};
-
-const throttle = (callback, interval) => {
-  return setInterval(callback, interval);
-};
-
 /**
  * Returns a mapping of the groupBy param to an array of items that satisfies the condition.
  */
