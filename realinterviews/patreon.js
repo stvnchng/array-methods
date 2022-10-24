@@ -25,7 +25,7 @@ const cd = (currPath, newPath) => {
   return "/" + dest.join("/");
 };
 
-console.log(cd("/facebook/anin", "/abc/def"));
+console.log(cd("/afafa/dfdfdf", "/abc/def"));
 
 // def simplifyPath(self, path):
 //         stack = []
@@ -38,10 +38,13 @@ console.log(cd("/facebook/anin", "/abc/def"));
 //         return '/' + '/'.join(stack)
 
 /**
- * Implement a rate limiter
+ * Implement a rate limiter that handles X requests/sec
+ *
+ * This DS can be improved by using a LinkedList
+ * There is no LL in JS and I'm just lazy
  */
 class RateLimiter {
-  occupied = new this.LinkedList();
+  occupied = [];
 
   constructor(maxRequests) {
     this.maxRequests = maxRequests;
@@ -49,8 +52,8 @@ class RateLimiter {
 
   canHandle(request) {
     if (this.occupied.length > 0) {
-      if (request - this.occupied.peekLeft() >= 1000) {
-        this.occupied.popLeft();
+      if (request - this.occupied[0] >= 1000) {
+        this.occupied.shift();
       }
     }
 
@@ -62,3 +65,11 @@ class RateLimiter {
     }
   }
 }
+
+const rl = new RateLimiter(2);
+rl.canHandle(1000);
+rl.canHandle(1100);
+rl.canHandle(1200);
+rl.canHandle(2000);
+rl.canHandle(2100);
+rl.canHandle(2200);

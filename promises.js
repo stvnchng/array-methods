@@ -63,10 +63,8 @@ const mock3 = mockReturnValue({ value: [7, 8] });
 const promises = [mock1, mock2, mock3];
 
 const getResults = async () => {
-  try {
-    const results = await promiseAll(promises);
-    console.log(results);
-  } catch (error) {}
+  const results = await promiseAll(promises);
+  console.log(results);
 };
 
 getResults();

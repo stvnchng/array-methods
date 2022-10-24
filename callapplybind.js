@@ -24,3 +24,20 @@ person.hello.apply(stevenPerson, ["Bob from apply"]);
 const stevenHello = person.hello.bind(stevenPerson);
 
 stevenHello("the bind function");
+
+/**
+ * Some tricky problems with call and apply
+ */
+const numbers = [1, 2, 3, 4, 5];
+const moreNumbers = [6, 7, 8, 9, 10];
+numbers.push.apply(numbers, moreNumbers);
+console.log(numbers);
+console.log(Math.max.apply(null, numbers));
+
+function f() {
+  console.log(this.name);
+}
+
+f = f.bind({ name: "John" }).bind({ name: "Ann" });
+
+f(); // this should print out John. Bind chaining is invalid.
