@@ -27,16 +27,6 @@ const cd = (currPath, newPath) => {
 
 console.log(cd("/afafa/dfdfdf", "/abc/def"));
 
-// def simplifyPath(self, path):
-//         stack = []
-//         for p in path.split("/"):
-//             if p == "..":
-//                 if stack:
-//                     stack.pop()
-//             elif p and p != '.':
-//                 stack.append(p)
-//         return '/' + '/'.join(stack)
-
 /**
  * Implement a rate limiter that handles X requests/sec
  *

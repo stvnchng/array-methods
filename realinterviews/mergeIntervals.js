@@ -1,3 +1,9 @@
+/**
+ * Greedy - sort all intervals by start first, and merge them as we push them.
+ *
+ * We can push and merge in one pass, O(n)
+ * But since we have to sort the input first, overall is O(nlogn)
+ */
 const mergeIntervals = (intervals) => {
   if (intervals.length <= 1) return intervals;
   intervals.sort((a, b) => a[0] - b[0]);

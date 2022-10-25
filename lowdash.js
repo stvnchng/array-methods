@@ -34,9 +34,7 @@ console.log(cloneDeep(nestedObj));
 console.log(cloneDeep(nestedArr));
 
 const cloneArr = (items) => {
-  return items.map((item) => {
-    return Array.isArray(item) ? cloneArr(item) : item;
-  });
+  return items.map((item) => (Array.isArray(item) ? cloneArr(item) : item));
 };
 
 console.log("\ncloneArr results");
