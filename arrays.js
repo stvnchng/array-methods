@@ -92,7 +92,6 @@ console.log(flat(nestedArr));
 console.log("\nFlatten array recursively with depth limit");
 console.log(flatN(nestedArr, 1));
 
-// TODO: investigate is it possible to chain non-native implementation
 const flatMap = (items, callback) => {
   return [].concat(...items.map((item) => callback(item)));
 };
