@@ -4,11 +4,12 @@
 let charSet = ["A", "T", "M", "@", "$"];
 
 /**
- *
- * @param {*} charSet
+ * For every character in the given pool, we generate all possible combinations
+ * for that length. This scales exponentially.
+ * @param {*} charSet - pool of chars to choose from
  * @param {*} output - password we want to generate
  * @param {*} n - length of current output password
- * @returns
+ * @returns nothing, just prints all possible chars
  */
 let numPasswords = 0;
 const generate = (charSet, output, n) => {

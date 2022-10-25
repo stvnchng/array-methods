@@ -124,14 +124,16 @@ const join = (items, separator = "") => {
   return res;
 };
 
-const reverse = (items) => {
-  let res = [];
-  for (let i = items.length - 1; i > -1; i--) {
-    res.push(items[i]);
+// Reverse in place
+const rip = (items) => {
+  for (let i = 0; i < Math.floor(items.length / 2); i++) {
+    let temp = items[i];
+    items[i] = items[items.length - i - 1];
+    items[items.length - i - 1] = temp;
   }
-  return res;
+  return items;
 };
 
 const elements = ["Fire", "Air", "Water", "Earth", "Weed"];
 console.log(join(elements, "$"));
-console.log(reverse(elements));
+console.log(rip(elements));
