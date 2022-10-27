@@ -6,14 +6,6 @@ const map = (items, callback) => {
   return res;
 };
 
-const reduceVerbose = (items, callback, initVal = 0) => {
-  let acc = initVal;
-  for (const item of items) {
-    acc = callback(acc, item);
-  }
-  return acc;
-};
-
 const reduce = (items, callback, initVal = 0) => {
   items.forEach((item) => (initVal = callback(initVal, item)));
   return initVal;
@@ -21,9 +13,7 @@ const reduce = (items, callback, initVal = 0) => {
 
 const filter = (items, callback) => {
   let res = [];
-  for (const item of items) {
-    if (callback(item)) res.push(item);
-  }
+  items.forEach((item) => callback(item) && res.push(item));
   return res;
 };
 
@@ -55,17 +45,22 @@ const sort = (items, callback) => {
 };
 
 const test = [1, 2, 3, 4, 5, 6];
-console.log(map(test, (x) => x ** 2));
-console.log(reduce(test, (a, b) => a * b, 1));
-console.log(filter(test, (x) => x % 2 == 0));
-console.log(sort([6, 34, 5, 6, 3, 1], null));
-
-const every = (items, callback) => {
-  for (const item of items) {
-    if (!callback(item)) return false;
-  }
-  return true;
-};
+console.log(
+  "map test, expects [ 1, 4, 9, 16, 25, 36 ]:",
+  map(test, (x) => x ** 2)
+);
+console.log(
+  "reduce test, expects 720:",
+  reduce(test, (a, b) => a * b, 1)
+);
+console.log(
+  "filter test, expects [2, 4, 6]:",
+  filter(test, (x) => x % 2 === 0)
+);
+console.log(
+  "sort test, expects [ 1, 3, 5, 6, 6, 34 ]:",
+  sort([6, 34, 5, 6, 3, 1], null)
+);
 
 const flat = (items) => {
   let res = [];
@@ -85,23 +80,12 @@ const flatN = (items, n = Infinity) => {
   return res;
 };
 
-console.log(every(test, (x) => x > 0));
 const nestedArr = [1, [2, 3], [[[], 6], 6], 8];
-console.log("\nFlatten array recursively");
-console.log(flat(nestedArr));
-console.log("\nFlatten array recursively with depth limit");
-console.log(flatN(nestedArr, 1));
+console.log("\nflat array recursively", flat(nestedArr));
+console.log("flat array recursively w/ depth", flatN(nestedArr, 1));
 
 const flatMap = (items, callback) => {
   return [].concat(...items.map((item) => callback(item)));
-};
-
-const flatMapVerbose = (items, callback) => {
-  let res = [];
-  items.forEach((item) => {
-    res.push(...callback(item));
-  });
-  return res;
 };
 
 const flatMapReduce = (items, callback) => {
@@ -109,12 +93,17 @@ const flatMapReduce = (items, callback) => {
 };
 
 const obj1 = { value: [1, 2, 3] };
-const obj2 = { value: [4, 5, 6] };
-const obj3 = { value: [7, 8, 9] };
+const obj2 = { value: [4, 5] };
+const obj3 = { value: [6] };
 const arr = [obj1, obj2, obj3];
-console.log(flatMap(arr, ({ value }) => value));
-console.log(flatMapVerbose(arr, ({ value }) => value));
-console.log(flatMapReduce(arr, ({ value }) => value));
+console.log(
+  "flatMap",
+  flatMap(arr, ({ value }) => value)
+);
+console.log(
+  "flatMapReduce",
+  flatMapReduce(arr, ({ value }) => value)
+);
 
 const join = (items, separator = "") => {
   let res = "";
@@ -135,5 +124,40 @@ const rip = (items) => {
 };
 
 const elements = ["Fire", "Air", "Water", "Earth", "Weed"];
-console.log(join(elements, "$"));
-console.log(rip(elements));
+console.log("\njoin result:", join(elements, "$"));
+console.log("in-place Array.reverse():", rip(elements));
+
+/**
+ * Recursive and iterative binary search implementations
+ */
+const binSearch = (nums, target, l, r) => {
+  if (l <= r) {
+    const mid = Math.floor((l + r) / 2);
+    if (nums[mid] === target) {
+      return mid;
+    }
+    if (nums[mid] > target) {
+      return binSearch(nums, target, l, mid - 1);
+    }
+    return binSearch(nums, target, mid + 1, r);
+  }
+  return -1;
+};
+
+const binSearchIt = (nums, target, l, r) => {
+  while (l <= r) {
+    const mid = Math.floor((l + r) / 2);
+    if (nums[mid] === target) {
+      return mid;
+    } else if (nums[mid] > target) {
+      r = mid - 1;
+    } else {
+      l = mid + 1;
+    }
+  }
+  return -1;
+};
+
+const nums = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+console.log("binsearch recursive:", binSearch(nums, 4, 0, nums.length));
+console.log("binserach iterative:", binSearchIt(nums, 4, 0, nums.length));
