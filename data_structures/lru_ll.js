@@ -1,3 +1,8 @@
+/**
+ * LRU Cache with TTL
+ *
+ * Implemented with a doubly-LL and no built-in objects.
+ */
 class Node {
   constructor(key, value, time) {
     this.key = key;

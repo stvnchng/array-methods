@@ -1,13 +1,14 @@
 /**
- * LRU with TTL using built-in Map object.
+ * LRU Cache with TTL.
+ *
+ * Great use case for the built-in Map object.
  */
 class LRU {
   constructor(capacity) {
     this.capacity = capacity;
     // cache maps key to [value, expireTime]
     this.cache = new Map();
-    // expired just maps key to expireTime because value is voided upon expiry
-    // when we have to evict, first check this map and evict the min expireTime first
+    // expired maps key to expireTime because value is voided upon expiry
     this.expired = new Map();
   }
 
@@ -31,11 +32,11 @@ class LRU {
     // set the key as most recent
     this.cache.set(key, [value, time]);
     if (this.cache.size > this.capacity) {
+      // first check expired keys and evict the min expireTime
       if (this.expired.size) {
-        const minExpTime = Math.min(...this.expired.values());
-        const keyToDelete = [...this.expired.keys()].find(
-          (key) => this.expired.get(key) === minExpTime
-        );
+        const keyToDelete = [...this.expired].reduce((a, b) =>
+          a[1] < b[1] ? a : b
+        )[0];
         this.expired.delete(keyToDelete);
         this.cache.delete(keyToDelete);
         console.log("evicted key", keyToDelete);
@@ -67,18 +68,3 @@ console.log(lRUCache.get(1, 1));
 console.log(lRUCache.get(3, 1));
 console.log(lRUCache.get(4, 1));
 console.timeEnd("LRU Cache Runtime");
-// Expected output:
-// 3
-// -1, key 1 expired at time 11
-// 4
-// -1, key 2 expired at time 6
-// evicted key 2
-// -1, not found
-// evicted key 1
-// -1, not found
-// 100
-// 4
-
-// const keyToDelete = [...this.expiredCache].reduce((a, b) =>
-//   a[1] < b[1] ? a : b
-// )[0];
