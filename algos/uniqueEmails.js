@@ -1,5 +1,5 @@
 /**
- *
+ *  https://leetcode.com/problems/unique-email-addresses/
  **/
 const numUniqueEmails = (emails) => {
   const uniqueEmails = new Set();

@@ -7,8 +7,7 @@
  *
  * 3. Explain webpack/Babel
  *
- * 4. Explain ways for how to load a website faster.
- *
+ * 4. Explain ways to load a website faster.
  */
 
 const inc = (x) => {
