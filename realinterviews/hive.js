@@ -27,11 +27,15 @@ const trace = (x) => {
 };
 
 // return type: function
-const pipe = (...fns) => {
-  return (arg) => {
-    return fns.reduce((val, fn) => fn(val), arg);
-  };
-};
+const pipe =
+  (...fns) =>
+  (arg) =>
+    fns.reduce((val, fn) => fn(val), arg);
+
+const compose =
+  (...fns) =>
+  (arg) =>
+    fns.reduceRight((val, fn) => fn(val), arg);
 
 const myPipedFunctionA = pipe(inc, trace, inc, trace);
 
