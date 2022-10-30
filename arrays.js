@@ -1,8 +1,6 @@
 const map = (items, callback) => {
   let res = [];
-  for (const item of items) {
-    res.push(callback(item));
-  }
+  items.forEach((item) => res.push(callback(item)));
   return res;
 };
 
