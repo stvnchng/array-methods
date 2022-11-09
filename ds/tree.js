@@ -46,7 +46,7 @@ function printTree(root, n = 0) {
 const tree = new TreeNode(
   1,
   new TreeNode(2, new TreeNode(3)),
-  new TreeNode(4, undefined, new TreeNode(5, new TreeNode(6)))
+  new TreeNode(4, null, new TreeNode(5, new TreeNode(6)))
 );
 printTree(tree);
 console.log("tree.validBST() should expect false:", isValid(tree));
