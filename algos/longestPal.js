@@ -22,4 +22,4 @@ const longestPal = (s) => {
 };
 
 const s = "abccccdd";
-console.log(longestPal(s));
+console.log(longestPal(s)); // expects 7
