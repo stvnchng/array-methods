@@ -1,3 +1,5 @@
-const fb = (i) => [...Array(i).keys()].forEach((i) => console.log("Fizz".repeat(i % 3 === 0) + "Buzz".repeat(i % 5 === 0) || i));
-
-fb(101);
+const f = (n) =>
+  [...Array(n)].map((_, i) =>
+    console.log((++i % 3 ? "" : "Fizz") + (i % 5 ? "" : "Buzz") || i)
+  );
+f(101);
